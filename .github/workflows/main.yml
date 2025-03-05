@@ -1,0 +1,25 @@
+name: Update Submodule
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update-submodule:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          submodules: 'true'
+
+      - name: Update submodule
+        run: |
+          cd libs/hbb_common
+          git fetch origin
+          git checkout main  # 或者指定某个提交
+          cd ..
+          git add libs/hbb_common
+          git commit -m "Updated hbb_common submodule"
+          git push
